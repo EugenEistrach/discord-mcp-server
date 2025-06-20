@@ -1,0 +1,53 @@
+{
+  "name": "discord-mcp-server",
+  "version": "0.1.0",
+  "description": "A Model Context Protocol server for Discord notifications and user input",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "test": "tsx src/test.ts",
+    "test:notify": "tsx src/test.ts notify",
+    "test:input": "tsx src/test.ts input", 
+    "test:yesno": "tsx src/test.ts yesno",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "discord",
+    "notifications",
+    "ai",
+    "claude",
+    "bot"
+  ],
+  "author": "Eugene Istrach",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.13.0",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "tsx": "^4.6.2",
+    "typescript": "^5.3.3"
+  },
+  "bin": {
+    "discord-mcp-server": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/discord-mcp-server.git"
+  }
+}
