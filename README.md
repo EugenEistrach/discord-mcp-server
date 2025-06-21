@@ -9,7 +9,7 @@ This isn't a full Discord bot - it's specifically designed for **AI agents to co
 ## Features
 
 - 📢 **Send Notifications** - Agent sends updates to Discord channels
-- 💬 **Request User Input** - Agent asks questions and waits for responses  
+- 💬 **Request User Input** - Agent asks questions and waits for responses
 - ✅ **Yes/No Questions** - Simple decision prompts with emoji reactions
 - ⏰ **Async Communication** - Perfect for long-running tasks requiring remote interaction
 
@@ -79,6 +79,10 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
   "timeout_seconds": 300
 }
 ```
+
+## Agent Instructions
+
+For guidance on how to instruct AI agents to use these tools effectively, see [`AGENT_INSTRUCTIONS.md`](./AGENT_INSTRUCTIONS.md). It provides example guidelines for when agents should communicate vs. work autonomously.
 
 ## Important Notes
 
