@@ -1,88 +1,51 @@
-# Discord MCP Server
+# MCP Discord Agent Communication
 
-A simple Model Context Protocol (MCP) server that enables AI assistants to send notifications and request user input through Discord.
+An MCP (Model Context Protocol) server that enables async communication between AI agents and users via Discord. Perfect for long-running AI tasks where you need remote interaction capabilities.
+
+## 🎯 Purpose
+
+This isn't a full Discord bot - it's specifically designed for **AI agents to communicate with users remotely** during long-running tasks. Step away from your machine while your AI assistant handles complex work and reaches out when needed.
 
 ## Features
 
-- 📢 **Send Notifications** - Send messages to Discord channels
-- 💬 **Request User Input** - Ask questions and wait for responses with timeout
-- ✅ **Yes/No Questions** - Simple decision prompts with reaction-based responses
-- ⏱️ **Configurable Timeouts** - Set how long to wait for user responses
-- 🔄 **Simple Integration** - Works with any MCP-compatible client (Claude Desktop, VSCode, etc.)
+- 📢 **Send Notifications** - Agent sends updates to Discord channels
+- 💬 **Request User Input** - Agent asks questions and waits for responses  
+- ✅ **Yes/No Questions** - Simple decision prompts with emoji reactions
+- ⏰ **Async Communication** - Perfect for long-running tasks requiring remote interaction
 
-## Prerequisites
+## Use Cases
 
-- Node.js 18+
-- A Discord account
-- A Discord server where you have permission to add bots
+Perfect for scenarios where AI agents need remote human interaction:
+- Kick off complex tasks and get notified when they complete
+- Let AI ask for your input or feedback when decisions are needed
+- Stay in the loop while doing other activities (workouts, walks, meetings)
+- Monitor progress without being glued to your screen
 
-## Installation
+## Quick Setup
 
-```bash
-npm install discord-mcp-server
-```
-
-Or install globally:
-
-```bash
-npm install -g discord-mcp-server
-```
-
-## Discord Bot Setup
-
-### 1. Create a Discord Application
+### 1. Create Discord Bot
 
 1. Go to [Discord Developer Portal](https://discord.com/developers/applications)
-2. Click "New Application" and give it a name
-3. Go to the "Bot" section in the left sidebar
-4. Click "Add Bot"
+2. Create "New Application" → Go to "Bot" → "Add Bot"
+3. Copy the bot token
+4. Enable "MESSAGE CONTENT INTENT" in bot settings
+5. Use OAuth2 URL Generator to invite bot to your server with these permissions:
+   - Send Messages, Read Message History, Add Reactions, View Channels
 
-### 2. Get Your Bot Token
+### 2. Get Channel ID
 
-1. In the Bot section, click "Reset Token"
-2. Copy the token (you'll need this for configuration)
-3. **Keep this token secret!** Never commit it to Git
+Enable Developer Mode in Discord settings, then right-click your channel → "Copy Channel ID"
 
-### 3. Set Bot Permissions
+### 3. Configure Claude Desktop
 
-1. In the Bot section, scroll down to "Privileged Gateway Intents"
-2. Enable "MESSAGE CONTENT INTENT"
-
-### 4. Invite Bot to Your Server
-
-1. Go to "OAuth2" → "URL Generator" in the left sidebar
-2. Under "SCOPES", select:
-   - ✅ **bot**
-3. After selecting "bot", you'll see "BOT PERMISSIONS" appear below. Select these permissions:
-   - ✅ **Send Messages**
-   - ✅ **Read Message History**
-   - ✅ **Add Reactions**
-   - ✅ **View Channels**
-4. Copy the generated URL and open it in your browser
-5. Select your server and click "Authorize"
-
-### 5. Get Your Channel ID
-
-1. In Discord, go to User Settings → Advanced
-2. Enable "Developer Mode"
-3. Right-click on the channel where you want the bot to send messages
-4. Click "Copy Channel ID"
-
-## Configuration
-
-### For Claude Desktop
-
-Add to your Claude Desktop configuration file:
-
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
 
 ```json
 {
   "mcpServers": {
-    "discord": {
+    "discord-agent-comm": {
       "command": "npx",
-      "args": ["discord-mcp-server"],
+      "args": ["mcp-discord-agent-comm"],
       "env": {
         "DISCORD_BOT_TOKEN": "your-bot-token-here",
         "DISCORD_CHANNEL_ID": "your-channel-id-here"
@@ -92,133 +55,66 @@ Add to your Claude Desktop configuration file:
 }
 ```
 
-### Environment Variables
+## Available Tools
 
-You can also use a `.env` file in your project:
-
-```env
-DISCORD_BOT_TOKEN=your-bot-token-here
-DISCORD_CHANNEL_ID=your-channel-id-here
+### `discord_send_notification`
+```json
+{
+  "message": "Task completed! 🎉"
+}
 ```
 
-## Usage
-
-Once configured, the following tools are available in your MCP client:
-
-### Send a Notification
-
-```typescript
-await discord_send_notification({
-  message: "Task completed successfully! 🎉"
-});
+### `discord_request_input`
+```json
+{
+  "question": "What should I name this file?",
+  "timeout_seconds": 300
+}
 ```
 
-### Ask for User Input
-
-```typescript
-const response = await discord_request_input({
-  question: "What should I name this file?",
-  timeout_seconds: 60  // Optional, defaults to 60
-});
-
-// Response: { success: true, response: "user_data.json" }
+### `discord_yes_no`
+```json
+{
+  "question": "Deploy to production?",
+  "timeout_seconds": 300
+}
 ```
 
-### Ask a Yes/No Question
+## Important Notes
 
-```typescript
-const answer = await discord_yes_no({
-  question: "Should I deploy to production?",
-  timeout_seconds: 30  // Optional, defaults to 60
-});
+### Discord Notifications
+- **Only one device receives Discord notifications** - disable Discord on other devices or turn off notifications if you want them on a specific device
+- Notifications work best on mobile devices when other instances are closed
 
-// Response: { success: true, result: true }
-```
-
-## How It Works
-
-1. **Notifications**: Simply sends a message to the configured Discord channel
-2. **User Input**:
-   - Bot sends a message asking for input
-   - Users click "Reply" on the message and type their response
-   - Bot waits for the reply (up to timeout)
-   - Returns the user's response or times out
-3. **Yes/No Questions**:
-   - Bot sends a message with ✅ and ❌ reactions
-   - User clicks one of the reactions
-   - Bot returns true for ✅, false for ❌
-
-## Development
-
-### Running Locally
-
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/discord-mcp-server.git
-cd discord-mcp-server
-
-# Install dependencies
-npm install
-
-# Copy environment variables
-cp .env.example .env
-# Edit .env with your bot token and channel ID
-
-# Run in development mode
-npm run dev
-```
-
-### Building
-
-```bash
-npm run build
-```
-
-### Testing
-
-```bash
-# Run the test script
-npm test
-
-# Or test individual functions
-npm run test:notify
-npm run test:input
-npm run test:yesno
-```
+### How It Works
+- **Notifications**: Direct message to channel
+- **Input requests**: Users reply to the bot's message using Discord's reply feature
+- **Yes/No**: Users click ✅ or ❌ reactions
+- **Default timeout**: 300 seconds (5 minutes)
 
 ## Troubleshooting
 
-### Bot is not responding
-- Check that the bot is online in your Discord server (should show as online in member list)
-- Verify the bot has permissions in the channel
-- Check the channel ID is correct
-- Ensure MESSAGE CONTENT INTENT is enabled in Discord Developer Portal
+- **Bot offline**: Check token and permissions
+- **No notifications**: Ensure MESSAGE CONTENT INTENT enabled, check channel permissions
+- **Timeouts**: Users must reply to messages (not just type in channel) or click reactions
 
-### Timeout errors
-- The default timeout is 60 seconds
-- Users must reply to the specific message (using Discord's reply feature)
-- For yes/no questions, users must click the reaction, not type a response
+## Development
 
-### Permission errors
-- Ensure the bot has all required permissions in the channel
-- The bot needs to be able to see the channel, send messages, and add reactions
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+```bash
+git clone https://github.com/EugenEistrach/mcp-discord-agent-comm.git
+cd mcp-discord-agent-comm
+bun install
+cp .env.example .env  # Edit with your tokens
+bun run dev
+```
 
 ## License
 
 MIT
 
-## Security
+## Publishing Status
 
-- Never share your bot token
-- Use environment variables for sensitive configuration
-- Don't commit `.env` files to version control
+[![npm version](https://badge.fury.io/js/mcp-discord-agent-comm.svg)](https://badge.fury.io/js/mcp-discord-agent-comm)
+[![Downloads](https://img.shields.io/npm/dm/mcp-discord-agent-comm.svg)](https://www.npmjs.com/package/mcp-discord-agent-comm)
 
-## Support
-
-For issues and questions:
-- Open an issue on [GitHub](https://github.com/yourusername/discord-mcp-server)
-- Check existing issues for solutions
+Install globally: `npm install -g mcp-discord-agent-comm`

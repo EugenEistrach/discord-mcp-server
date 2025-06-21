@@ -1,14 +1,13 @@
 {
-	"name": "discord-mcp-server",
+	"name": "mcp-discord-agent-comm",
 	"version": "0.1.0",
-	"description": "A Model Context Protocol server for Discord notifications and user input",
+	"description": "An MCP server enabling async communication between AI agents and users via Discord - perfect for long-running tasks requiring remote interaction",
 	"main": "dist/index.js",
 	"type": "module",
 	"scripts": {
 		"build": "tsc",
 		"dev": "tsx src/index.ts",
 		"start": "node dist/index.js",
-		"test": "tsx src/test.ts",
 		"typecheck": "tsc --noEmit",
 		"lint": "biome check . --write",
 		"ci": "bun run typecheck && bun run lint && bun run build",
@@ -18,17 +17,21 @@
 		"mcp",
 		"model-context-protocol",
 		"discord",
-		"notifications",
+		"ai-agents",
+		"async-communication",
+		"remote-interaction",
 		"ai",
 		"claude",
-		"bot"
+		"notifications",
+		"agent-communication"
 	],
-	"author": "Eugene Istrach",
+	"author": "Eugen Eistrach",
 	"license": "MIT",
 	"dependencies": {
 		"@modelcontextprotocol/sdk": "^1.13.0",
 		"discord.js": "^14.20.0",
-		"dotenv": "^16.5.0"
+		"dotenv": "^16.5.0",
+		"zod": "^3.25.67"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.0.3",
@@ -37,7 +40,7 @@
 		"typescript": "^5.8.3"
 	},
 	"bin": {
-		"discord-mcp-server": "./dist/index.js"
+		"mcp-discord-agent-comm": "./dist/index.js"
 	},
 	"files": ["dist", "README.md", "LICENSE"],
 	"engines": {
@@ -45,6 +48,6 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/EugenEistrach/discord-mcp-server.git"
+		"url": "https://github.com/EugenEistrach/mcp-discord-agent-comm.git"
 	}
 }
