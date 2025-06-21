@@ -12,7 +12,7 @@ A simple Model Context Protocol (MCP) server that enables AI assistants to send 
 
 ## Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - A Discord account
 - A Discord server where you have permission to add bots
 
@@ -51,13 +51,13 @@ npm install -g discord-mcp-server
 ### 4. Invite Bot to Your Server
 
 1. Go to "OAuth2" → "URL Generator" in the left sidebar
-2. Select these scopes:
-   - `bot`
-3. Select these bot permissions:
-   - Send Messages
-   - Read Message History  
-   - Add Reactions
-   - View Channels
+2. Under "SCOPES", select:
+   - ✅ **bot**
+3. After selecting "bot", you'll see "BOT PERMISSIONS" appear below. Select these permissions:
+   - ✅ **Send Messages**
+   - ✅ **Read Message History**
+   - ✅ **Add Reactions**
+   - ✅ **View Channels**
 4. Copy the generated URL and open it in your browser
 5. Select your server and click "Authorize"
 
@@ -138,7 +138,7 @@ const answer = await discord_yes_no({
 ## How It Works
 
 1. **Notifications**: Simply sends a message to the configured Discord channel
-2. **User Input**: 
+2. **User Input**:
    - Bot sends a message asking for input
    - Users click "Reply" on the message and type their response
    - Bot waits for the reply (up to timeout)

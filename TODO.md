@@ -31,9 +31,9 @@
 
 ## Publishing
 - [ ] Prepare package.json for npm
-- [ ] Add build scripts
-- [ ] Create GitHub repository
-- [ ] Push initial commit
+- [x] Add build scripts
+- [x] Create GitHub repository  
+- [x] Push initial commit
 - [ ] Publish to npm
 - [ ] Create GitHub release
 
