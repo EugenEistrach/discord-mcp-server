@@ -8,9 +8,9 @@ This isn't a full Discord bot - it's specifically designed for **AI agents to co
 
 ## Features
 
-- 📢 **Send Notifications** - Agent sends updates to Discord channels
-- 💬 **Request User Input** - Agent asks questions and waits for responses
-- ✅ **Yes/No Questions** - Simple decision prompts with emoji reactions
+- 💬 **Unified Communication** - Single tool for all Discord interactions
+- 📢 **Send Notifications** - Agent sends updates without waiting for response
+- 🔄 **Request User Input** - Agent asks questions and waits for replies
 - ⏰ **Async Communication** - Perfect for long-running tasks requiring remote interaction
 
 ## Use Cases
@@ -55,30 +55,35 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
 }
 ```
 
-## Available Tools
+## Available Tool
 
-### `discord_send_notification`
+### `discord_message`
+Send a message to Discord, optionally waiting for a response.
+
+#### Simple notification (no response needed):
 ```json
 {
   "message": "Task completed! 🎉"
 }
 ```
 
-### `discord_request_input`
+#### Request user input (waits for reply):
 ```json
 {
-  "question": "What should I name this file?",
-  "timeout_seconds": 300
+  "message": "What should I name this file?",
+  "expect_reply": true
 }
 ```
 
-### `discord_yes_no`
+#### Yes/No or any other question (waits for reply):
 ```json
 {
-  "question": "Deploy to production?",
-  "timeout_seconds": 300
+  "message": "Should I deploy to production?",
+  "expect_reply": true
 }
 ```
+
+Note: When `expect_reply` is true, the tool waits for the user to reply to the message in Discord.
 
 ## Agent Instructions
 
@@ -91,10 +96,9 @@ For guidance on how to instruct AI agents to use these tools effectively, see [`
 - Notifications work best on mobile devices when other instances are closed
 
 ### How It Works
-- **Notifications**: Direct message to channel
-- **Input requests**: Users reply to the bot's message using Discord's reply feature
-- **Yes/No**: Users click ✅ or ❌ reactions
-- **Default timeout**: 300 seconds (5 minutes)
+- **Notifications**: Direct message to channel (when `expect_reply` is false or omitted)
+- **Input requests**: Users reply to the bot's message using Discord's reply feature (when `expect_reply` is true)
+- **Default timeout**: 300 seconds (5 minutes) when waiting for replies
 
 ## Troubleshooting
 

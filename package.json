@@ -1,6 +1,6 @@
 {
 	"name": "mcp-discord-agent-comm",
-	"version": "0.1.1",
+	"version": "0.2.0",
 	"description": "An MCP server enabling async communication between AI agents and users via Discord - perfect for long-running tasks requiring remote interaction",
 	"main": "dist/index.js",
 	"type": "module",
