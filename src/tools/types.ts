@@ -24,19 +24,8 @@ export interface ToolDefinition {
 	};
 }
 
-export interface SendNotificationArgs {
+export interface DiscordMessageArgs {
 	message: string;
-	channel_id?: string;
-}
-
-export interface RequestInputArgs {
-	question: string;
-	timeout_seconds?: number;
-	channel_id?: string;
-}
-
-export interface YesNoArgs {
-	question: string;
-	timeout_seconds?: number;
+	expect_reply?: boolean;
 	channel_id?: string;
 }

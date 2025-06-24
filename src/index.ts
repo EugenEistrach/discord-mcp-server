@@ -3,9 +3,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { Client, GatewayIntentBits, type Message } from "discord.js";
 import dotenv from "dotenv";
-import { requestInputTool } from "./tools/request-input.js";
-import { sendNotificationTool } from "./tools/send-notification.js";
-import { yesNoTool } from "./tools/yes-no.js";
+import { discordMessageTool } from "./tools/discord-message.js";
 
 // Load environment variables
 dotenv.config();
@@ -73,16 +71,14 @@ const server = new McpServer(
 	},
 );
 
-// Register tools
-sendNotificationTool(server, discord, DEFAULT_CHANNEL_ID);
-requestInputTool(
+// Register tool
+discordMessageTool(
 	server,
 	discord,
 	DEFAULT_CHANNEL_ID,
 	DEFAULT_TIMEOUT,
 	pendingRequests,
 );
-yesNoTool(server, discord, DEFAULT_CHANNEL_ID, DEFAULT_TIMEOUT);
 
 // Start the server
 async function main() {
