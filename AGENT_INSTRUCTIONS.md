@@ -7,7 +7,7 @@ Example instructions you can provide to agents when using this MCP server:
 ## Discord Communication Guidelines
 
 **When to notify me:**
-- ✅ Task completed successfully 
+- ✅ Task completed successfully
 - ⚠️ Stuck on a problem after multiple attempts
 - 🤔 Need domain expertise for better solution
 - ❌ Critical error requiring human decision
